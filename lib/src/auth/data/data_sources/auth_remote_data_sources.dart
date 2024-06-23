@@ -6,6 +6,19 @@ class AuthRemoteDataSourcesImpl {
 
   final FirebaseAuth _auth;
 
+  User? isLoggedIn() {
+    try {
+      final user = _auth.currentUser;
+
+      return user;
+    } catch (e) {
+      throw CacheException(
+        message: 'Firebase Error',
+        statusCode: 500,
+      );
+    }
+  }
+
   Future<User?> signInWithEmailAndPassword({
     required String email,
     required String password,

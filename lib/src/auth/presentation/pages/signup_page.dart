@@ -128,9 +128,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     debugPrint('[log] : authstate $state');
                     if (state.authenticationStates ==
                         AuthenticationStates.signedUp) {
-                      Navigator.pushReplacementNamed(
+                      Navigator.pushReplacement(
                         context,
-                        LoginPage.routeName,
+                        MaterialPageRoute(
+                          builder: (ctx) => const LoginPage(),
+                        ),
                       );
                     }
                     if (state.authenticationStates ==
@@ -182,9 +184,11 @@ class _SignUpPageState extends State<SignUpPage> {
                                       return;
                                     }
 
-                                    Navigator.pushReplacementNamed(
+                                    Navigator.pushReplacement(
                                       context,
-                                      LoginPage.routeName,
+                                      MaterialPageRoute(
+                                        builder: (ctx) => const LoginPage(),
+                                      ),
                                     );
                                   },
                               ),

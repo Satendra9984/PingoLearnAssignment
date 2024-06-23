@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:pingolearn/src/auth/data/repositories/auth_repo_impl.dart';
 import 'package:pingolearn/src/auth/presentation/models/auth_states_enum.dart';
+import 'package:pingolearn/src/onboarding/presentation/models/loading_states.dart';
 
 part 'authentication_state.dart';
 
@@ -16,6 +18,32 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
             authenticationStates: AuthenticationStates.initial,
           ),
         );
+
+  void checkIfLoggedIn() {
+    final result = _authRepositoryImpl.isLoggedIn();
+    debugPrint('Current state before emit: $state');
+
+    result.fold(
+      (failed) {
+        // debugPrint('Emitting notLoggedIn');
+        emit(
+            state.copyWith(authenticationStates: AuthenticationStates.initial));
+      },
+      (loginRes) {
+        if (loginRes == true) {
+          // debugPrint('Emitting isLoggedIn');
+          emit(state.copyWith(
+              authenticationStates: AuthenticationStates.signedIn));
+        } else {
+          // debugPrint('Emitting notLoggedIn false');
+          emit(state.copyWith(
+              authenticationStates: AuthenticationStates.initial));
+        }
+      },
+    );
+    emit(state);
+    debugPrint('Current state after emit: $state');
+  }
 
   Future<void> signUpWithEmailAndPassword({
     required String name,
@@ -37,11 +65,13 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         );
       },
       (result) {
-        emit(state.copyWith(authenticationStates: AuthenticationStates.signedUp));
+        emit(state.copyWith(
+            authenticationStates: AuthenticationStates.signedUp));
       },
     );
   }
-    Future<void> signInWithEmailAndPassword({
+
+  Future<void> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -59,7 +89,8 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         );
       },
       (result) {
-        emit(state.copyWith(authenticationStates: AuthenticationStates.signedIn));
+        emit(state.copyWith(
+            authenticationStates: AuthenticationStates.signedIn));
       },
     );
   }

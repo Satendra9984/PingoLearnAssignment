@@ -1,26 +1,20 @@
 part of 'onboarding_cubit.dart';
 
-class OnboardingState extends Equatable {
+class OnBoardState extends Equatable {
   final OnBoardingStates onBoardingStates;
-  // final bool changed;
-  const OnboardingState({
+
+  const OnBoardState({
     required this.onBoardingStates,
-    // this.changed = false,
   });
 
-  OnboardingState copyWith({
+  OnBoardState copyWith({
     OnBoardingStates? onBoardingStates,
-    bool? changed,
   }) {
-    return OnboardingState(
+    return OnBoardState(
       onBoardingStates: onBoardingStates ?? this.onBoardingStates,
-      // changed: changed ?? this.changed,
     );
   }
 
   @override
-  List<Object> get props => [
-        onBoardingStates,
-        // changed,
-      ];
+  List<Object> get props => [onBoardingStates];
 }

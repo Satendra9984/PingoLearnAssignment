@@ -8,9 +8,10 @@ import 'package:pingolearn/src/auth/presentation/pages/signup_page.dart';
 import 'package:pingolearn/src/auth/presentation/widgets/custom_button.dart';
 import 'package:pingolearn/src/auth/presentation/widgets/custom_textfield.dart';
 import 'package:pingolearn/src/news/presentation/pages/news_list.dart';
+import 'package:pingolearn/src/onboarding/presentation/models/loading_states.dart';
 
 class LoginPage extends StatefulWidget {
-  static const routeName = '/login';
+  // static const routeName = '/login';
 
   const LoginPage({super.key});
 
@@ -22,6 +23,12 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    context.read<AuthenticationCubit>().checkIfLoggedIn();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -110,17 +117,23 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 BlocConsumer<AuthenticationCubit, AuthenticationState>(
                   listener: (context, state) {
+                    debugPrint('[log] : authstate ${state.authenticationStates}');
+
+                    // if(state.onBoardingStates == OnBoardingStates.)
+
                     if (state.authenticationStates ==
                         AuthenticationStates.signedIn) {
-                      Navigator.pushReplacementNamed(
+                      Navigator.pushReplacement(
                         context,
-                        NewsListPage.routeName,
+                        MaterialPageRoute(
+                          builder: (ctx) => const NewsListPage(),
+                        ),
                       );
                     }
-                    
+
                     if (state.authenticationStates ==
                         AuthenticationStates.errorSigningIn) {
-                      // [TODO] : ScaffoldMessenger 
+                      // [TODO] : ScaffoldMessenger
                     }
                   },
                   builder: (context, state) {
@@ -170,9 +183,11 @@ class _LoginPageState extends State<LoginPage> {
                                     }
                                     // debugPrint('[log] : tapping SignUp');
 
-                                    Navigator.pushReplacementNamed(
+                                    Navigator.pushReplacement(
                                       context,
-                                      SignUpPage.routeName,
+                                      MaterialPageRoute(
+                                        builder: (ctx) => const SignUpPage(),
+                                      ),
                                     );
                                   },
                               ),

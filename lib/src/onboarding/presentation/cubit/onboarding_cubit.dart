@@ -6,32 +6,33 @@ import 'package:pingolearn/src/onboarding/presentation/models/loading_states.dar
 
 part 'onboarding_state.dart';
 
-class OnboardingCubit extends Cubit<OnboardingState> {
+class OnBoardCubit extends Cubit<OnBoardState> {
   final OnBoardingRepoImpl _boardingRepoImpl;
 
-  OnboardingCubit({
+  OnBoardCubit({
     required OnBoardingRepoImpl onBoardingRepoImpl,
   })  : _boardingRepoImpl = onBoardingRepoImpl,
         super(
-          const OnboardingState(
+          const OnBoardState(
             onBoardingStates: OnBoardingStates.initial,
           ),
         );
 
   void checkIfLoggedIn() {
     final result = _boardingRepoImpl.isLoggedIn();
+    debugPrint('Current state before emit: $state');
 
     result.fold(
-      (failure) {
-        debugPrint('Emitting notLoggedIn');
+      (failed) {
+        // debugPrint('Emitting notLoggedIn');
         emit(state.copyWith(onBoardingStates: OnBoardingStates.notLoggedIn));
       },
-      (isLoggedIn) {
-        if (isLoggedIn) {
-          debugPrint('Emitting isLoggedIn');
+      (loginRes) {
+        if (loginRes == true) {
+          // debugPrint('Emitting isLoggedIn');
           emit(state.copyWith(onBoardingStates: OnBoardingStates.isLoggedIn));
         } else {
-          debugPrint('Emitting notLoggedIn false');
+          // debugPrint('Emitting notLoggedIn false');
           emit(state.copyWith(onBoardingStates: OnBoardingStates.notLoggedIn));
         }
       },
