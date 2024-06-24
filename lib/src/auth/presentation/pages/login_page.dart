@@ -23,11 +23,6 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  @override
-  void initState() {
-    context.read<AuthenticationCubit>().checkIfLoggedIn();
-    super.initState();
-  }
 
   @override
   void dispose() {

@@ -15,6 +15,7 @@ import 'package:pingolearn/src/news/presentation/cubit/news_cubit.dart';
 import 'package:pingolearn/src/onboarding/data/data_sources/local_data_source_imple.dart';
 import 'package:pingolearn/src/onboarding/data/repositories/on_boarding_repo_impl.dart';
 import 'package:pingolearn/src/onboarding/presentation/cubit/onboarding_cubit.dart';
+import 'package:pingolearn/src/onboarding/presentation/pages/onboarding_home.dart';
 
 /// Before you can use the hive, you need to initialize it.
 void main() async {
@@ -78,8 +79,8 @@ class _MyAppState extends State<MyApp> {
               ColorScheme.fromSeed(seedColor: ColourPallette.primaryColour),
         ),
 
-        // home: OnBoardingHomePage(),
-        home: const LoginPage(),
+        home: const OnBoardingHomePage(),
+        // home: const LoginPage(),
         // onGenerateRoute: generateRoute,
       ),
     );

@@ -19,32 +19,6 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
           ),
         );
 
-  void checkIfLoggedIn() {
-    final result = _authRepositoryImpl.isLoggedIn();
-    debugPrint('Current state before emit: $state');
-
-    result.fold(
-      (failed) {
-        // debugPrint('Emitting notLoggedIn');
-        emit(
-            state.copyWith(authenticationStates: AuthenticationStates.initial));
-      },
-      (loginRes) {
-        if (loginRes == true) {
-          // debugPrint('Emitting isLoggedIn');
-          emit(state.copyWith(
-              authenticationStates: AuthenticationStates.signedIn));
-        } else {
-          // debugPrint('Emitting notLoggedIn false');
-          emit(state.copyWith(
-              authenticationStates: AuthenticationStates.initial));
-        }
-      },
-    );
-    emit(state);
-    debugPrint('Current state after emit: $state');
-  }
-
   Future<void> signUpWithEmailAndPassword({
     required String name,
     required String email,

@@ -16,33 +16,39 @@ class OnBoardingHomePage extends StatefulWidget {
 class _OnBoardingHomePageState extends State<OnBoardingHomePage> {
   @override
   void initState() {
-    context.read<OnBoardCubit>().checkIfLoggedIn();
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Call your BlocListener here
+      context.read<OnBoardCubit>().checkIfLoggedIn();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BlocListener<OnBoardCubit, OnBoardState>(
-              listener: (ctx, state) {
-                debugPrint('[log] : listening onboarding');
-              },
-              child: Text('j'),
-            ),
-            const Text(
+    return BlocConsumer<OnBoardCubit, OnBoardState>(
+      listener: (context, state) {
+        debugPrint('[log] : listening onboarding');
+
+        if(state.onBoardingStates == OnBoardingStates.isLoggedIn) {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx) => const NewsListPage()));
+        }
+        if(state.onBoardingStates == OnBoardingStates.notLoggedIn) {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx) => const LoginPage()));
+        }
+      },
+      builder: (context, state) {
+        return const Scaffold(
+          body: Center(
+            child: Text(
               'Pingolearn',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 28,
                 fontWeight: FontWeight.bold,
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
