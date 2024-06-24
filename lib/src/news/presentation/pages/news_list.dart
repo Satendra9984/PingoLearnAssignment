@@ -1,8 +1,4 @@
-import 'dart:js_interop_unsafe';
-
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingolearn/core/common/res/colours.dart';
 import 'package:pingolearn/core/services/firebase_remote_config.dart';
@@ -42,7 +38,7 @@ class _NewsListPageState extends State<NewsListPage> {
       ),
       body: BlocConsumer<NewsCubit, NewsState>(
         listener: (ctx, state) {
-          debugPrint('[log] : listening newstate $state');
+          debugPrint('[log] : listening newstate ${state.loadingStates}');
         },
         builder: (ctx, state) {
           if (state.loadingStates == LoadingStates.loading) {
@@ -110,6 +106,7 @@ class _NewsListPageState extends State<NewsListPage> {
                   margin: const EdgeInsets.symmetric(vertical: 8),
                   child: NewsListTile(
                     newsModel: news,
+                    isEmailMasked: maskedEmail == news.email,
                   ),
                 );
               },

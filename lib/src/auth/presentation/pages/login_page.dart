@@ -8,7 +8,6 @@ import 'package:pingolearn/src/auth/presentation/pages/signup_page.dart';
 import 'package:pingolearn/src/auth/presentation/widgets/custom_button.dart';
 import 'package:pingolearn/src/auth/presentation/widgets/custom_textfield.dart';
 import 'package:pingolearn/src/news/presentation/pages/news_list.dart';
-import 'package:pingolearn/src/onboarding/presentation/models/loading_states.dart';
 
 class LoginPage extends StatefulWidget {
   // static const routeName = '/login';

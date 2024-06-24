@@ -4,7 +4,12 @@ import 'package:pingolearn/src/news/data/models/news_model.dart';
 
 class NewsListTile extends StatefulWidget {
   final NewsModel newsModel;
-  const NewsListTile({required this.newsModel, super.key});
+  final bool isEmailMasked;
+  const NewsListTile({
+    required this.newsModel,
+    this.isEmailMasked = false,
+    super.key,
+  });
 
   @override
   State<NewsListTile> createState() => _NewsListTileState();
@@ -18,6 +23,32 @@ class _NewsListTileState extends State<NewsListTile> {
     lengthToShow = 4;
     super.initState();
   }
+
+  String maskEmail(String email, bool shouldMask) {
+  if (!shouldMask || email.isEmpty) {
+    return email;
+  }
+
+  // Split the email into local part and domain part
+  final parts = email.split('@');
+  if (parts.length != 2) {
+    // If email is not valid, return it as is
+    return email;
+  }
+
+  final localPart = parts[0];
+  final domainPart = parts[1];
+
+  if (localPart.length <= 3) {
+    // If the local part is 3 characters or less, mask the whole local part
+    return localPart.replaceAll(RegExp(r'.'), '*') + '@' + domainPart;
+  }
+
+  // Mask the local part except for the first 3 characters
+  final maskedLocalPart = localPart.substring(0, 3) + '*' * (localPart.length - 3);
+  return maskedLocalPart + '@' + domainPart;
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +106,7 @@ class _NewsListTileState extends State<NewsListTile> {
               ),
               children: [
                 TextSpan(
-                  text: widget.newsModel.email,
+                  text: maskEmail(widget.newsModel.email, widget.isEmailMasked),
                   style: const TextStyle(
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.bold,
