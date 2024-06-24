@@ -2,7 +2,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 
 class FirebaseRemoteConfigService {
-  static const String mask_email = 'mask_email';
+  static const String maskedEmailKey = 'mask_email';
 
   FirebaseRemoteConfigService._()
       : _remoteConfig = FirebaseRemoteConfig.instance; // MODIFIED
@@ -18,7 +18,7 @@ class FirebaseRemoteConfigService {
   double getDouble(String key) => _remoteConfig.getDouble(key); // NEW
 
   String get maskEmail => _remoteConfig.getString(
-        FirebaseRemoteConfigService.mask_email,
+        FirebaseRemoteConfigService.maskedEmailKey,
       );
 
   Future<void> _setConfigSettings() async => _remoteConfig.setConfigSettings(
@@ -29,7 +29,7 @@ class FirebaseRemoteConfigService {
       );
   Future<void> _setDefaults() async => _remoteConfig.setDefaults(
         const {
-          FirebaseRemoteConfigService.mask_email: "Hayden@althea.biz",
+          FirebaseRemoteConfigService.maskedEmailKey: "Hayden@althea.biz",
         },
       );
   Future<void> fetchAndActivate() async {

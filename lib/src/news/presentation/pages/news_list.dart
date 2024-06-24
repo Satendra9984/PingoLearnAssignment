@@ -98,7 +98,7 @@ class _NewsListPageState extends State<NewsListPage> {
                 var news = state.newsList[index];
 
                 String maskedEmail = FirebaseRemoteConfigService()
-                    .getString(FirebaseRemoteConfigService.mask_email);
+                    .getString(FirebaseRemoteConfigService.maskedEmailKey);
 
                 debugPrint('[log] : maskedmail ${maskedEmail}');
 

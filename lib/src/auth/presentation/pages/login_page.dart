@@ -116,9 +116,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 BlocConsumer<AuthenticationCubit, AuthenticationState>(
                   listener: (context, state) {
-                    debugPrint('[log] : authstate ${state.authenticationStates}');
-
-                    // if(state.onBoardingStates == OnBoardingStates.)
+                    debugPrint(
+                        '[log] : authstate ${state.authenticationStates}');
 
                     if (state.authenticationStates ==
                         AuthenticationStates.signedIn) {
@@ -151,8 +150,12 @@ class _LoginPageState extends State<LoginPage> {
                             fontSize: 16.0,
                             icon: state.authenticationStates ==
                                     AuthenticationStates.signingIn
-                                ? const CircularProgressIndicator(
-                                    backgroundColor: Colors.white,
+                                ? const SizedBox(
+                                    height: 24,
+                                    width: 24,
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                    ),
                                   )
                                 : null,
                           ),

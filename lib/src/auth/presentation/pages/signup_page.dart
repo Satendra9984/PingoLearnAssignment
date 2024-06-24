@@ -154,8 +154,12 @@ class _SignUpPageState extends State<SignUpPage> {
                             fontSize: 16.0,
                             icon: state.authenticationStates ==
                                     AuthenticationStates.signingUp
-                                ? const CircularProgressIndicator(
-                                    backgroundColor: Colors.white,
+                                ? const SizedBox(
+                                    height: 24,
+                                    width: 24,
+                                    child:  CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                    ),
                                   )
                                 : null,
                           ),
